@@ -17,7 +17,7 @@ const Navbar = () => {
 
   return (
     <div className='bg-cyan-600'>
-        <img src={headerBg} alt="" className='w-full'/>
+        <img src={size < 640 ? headerBg : desktopHead} alt="" className='w-full'/>
     </div>
   )
 }
