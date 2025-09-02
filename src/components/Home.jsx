@@ -1,11 +1,29 @@
-import React from 'react'
+import React,{ useState } from 'react'
+import FilterBar from './FilterBar'
 import data from '../../public/data/data.json'
 
 const Home = () => {
+    const [ filterTerms, setFilterTerms ] = useState([])
     const roleAndSkills = []
+
+    const handleClick = (item) => {
+        setFilterTerms((prev) => {
+            const itemExists = prev.find(existingItem => existingItem === item)
+            if(itemExists){
+                return prev
+            }else{
+                return [...prev, item]
+            }
+        }
+        )
+    }
 
   return (
     <div className='bg-cyan-100 min-h-screen py-10 px-2 grid grid-cols-1 gap-10 sm:gap-5 sm:px-4 md:px-16 lg:px-32'>
+        <FilterBar 
+            setFilterTerms={setFilterTerms} 
+            filterTerms={filterTerms}
+        />
         {
             data.map(job => 
                 <div key={job.id} className='rounded-md sm:flex-row bg-white p-5 sm:items-center relative pt-8 sm:pt-5 flex flex-col gap-2  border-l-4 border-cyan-600'>
@@ -26,7 +44,7 @@ const Home = () => {
                     <div className='flex gap-5 mt-3 flex-wrap sm:ml-auto'>
                         {
                           roleAndSkills.concat(job.level, job.languages, job.tools).map((item, index) =>
-                                <span key={index} className='font-semibold text-cyan-600 text-sm sm:h-fit rounded-md p-1 bg-cyan-50'>{item}</span>
+                                <span key={index} onClick={() => handleClick(item)} className='cursor-pointer font-semibold text-cyan-600 text-sm sm:h-fit rounded-md p-1 bg-cyan-50'>{item}</span>
                             )
                         }
                     </div>
