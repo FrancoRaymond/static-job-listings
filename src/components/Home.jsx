@@ -17,16 +17,26 @@ const Home = () => {
         }
         )
     }
+    
+    const filtered = filterTerms.length === 0
+        ? data
+        : data.filter(item =>
+        filterTerms.every(term =>
+            item.languages.includes(term) ||
+            item.tools.includes(term) ||
+            item.level === term
+        )
+    );
 
   return (
-    <div className='bg-cyan-100 min-h-screen py-10 px-2 grid grid-cols-1 gap-10 sm:gap-5 sm:px-4 md:px-16 lg:px-32'>
+    <div className='bg-cyan-100 min-h-screen py-10 px-2 flex flex-col gap-10 sm:gap-5 sm:px-4 md:px-16 lg:px-32'>
         <FilterBar 
             setFilterTerms={setFilterTerms} 
             filterTerms={filterTerms}
         />
         {
-            data.map(job => 
-                <div key={job.id} className='rounded-md sm:flex-row bg-white p-5 sm:items-center relative pt-8 sm:pt-5 flex flex-col gap-2  border-l-4 border-cyan-600'>
+            filtered.map(job => 
+                <div key={job.id} className='rounded-md sm:flex-row bg-white p-5 h-fit sm:items-center relative pt-8 sm:pt-5 flex flex-col gap-2  border-l-4 border-cyan-600'>
                     <img src={job.logo} alt="" className='size-12 sm:size-14 rounded-full bg-red-600 absolute -translate-y-14 sm:translate-y-0 sm:relative'/>
                     <div className='flex flex-col gap-2 sm:gap-1'>
                         <div className=' flex gap-2'>
@@ -55,4 +65,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Home;
